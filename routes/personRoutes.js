@@ -1,11 +1,11 @@
 import express from "express";
-import verifyToken from "../middleware/authMiddleware.js";
+// import verifyToken from "../middleware/authMiddleware.js";
 import Person from "../models/person.js";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
 
-router.post("/add-person", verifyToken, async (req, res) => {
+router.post("/add-person", async (req, res) => {
   try {
     const person = new Person(req.body);
     const result = await person.save();
@@ -18,7 +18,7 @@ router.post("/add-person", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/people", verifyToken, async (req, res) => {
+router.get("/people", async (req, res) => {
   try {
     const people = await Person.find({});
     if (people.length > 0) {
@@ -32,7 +32,7 @@ router.get("/people", verifyToken, async (req, res) => {
   }
 });
 
-router.delete("/person/:id", verifyToken, async (req, res) => {
+router.delete("/person/:id", async (req, res) => {
   const id = req.params.id;
   console.log("Deleting person with id:", id);
 
@@ -52,7 +52,7 @@ router.delete("/person/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/person/:id", verifyToken, async (req, res) => {
+router.get("/person/:id", async (req, res) => {
   let result = await Person.findOne({ _id: req.params.id });
 
   if (result) {
@@ -64,7 +64,7 @@ router.get("/person/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/person/:id", verifyToken, async (req, res) => {
+router.put("/person/:id", async (req, res) => {
   let result = await Person.updateOne(
     { _id: req.params.id },
     {
@@ -74,7 +74,7 @@ router.put("/person/:id", verifyToken, async (req, res) => {
   res.send(result);
 });
 
-router.get("/search/:key", verifyToken, async (req, res) => {
+router.get("/search/:key", async (req, res) => {
   try {
     const key = req.params.key;
 
@@ -92,7 +92,7 @@ router.get("/search/:key", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/send-email", verifyToken, async (req, res) => {
+router.post("/send-email", async (req, res) => {
   try {
     const selectedPeople = req.body.selectedPeople;
 
