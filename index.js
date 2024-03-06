@@ -5,7 +5,7 @@ import "./db/config.js";
 import personRoutes from "./routes/personRoutes.js";
 
 const app = express();
-const port = 5000;
+const port = 10000;
 
 app.use(express.json());
 app.use(cors("*"));
